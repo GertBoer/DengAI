@@ -2,6 +2,7 @@
 
 ## Visualisation
 Number of cases per city:
+
 | City | Total Cases |
 | ---- | ----------- |
 | IQ | 3934 |
@@ -16,5 +17,5 @@ Experimented with the following models:
 * Random forest
 * XGBoost
 
-All of the models didn't perform well. The average Mean Squared Error (MSA) was around 30. 
+All of the models didn't perform well. The average Mean Squared Error (MSA) were around 30. 
 
