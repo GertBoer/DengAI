@@ -1,4 +1,5 @@
 # DengAI
+See project details at: https://www.drivendata.org/competitions/44/dengai-predicting-disease-spread/
 
 ## Visualisation
 Number of cases per city:
@@ -19,3 +20,6 @@ Experimented with the following models:
 
 All of the models didn't perform well. The average Mean Squared Error (MSA) were around 30. 
 
+## Neural Network for regression
+
+...
