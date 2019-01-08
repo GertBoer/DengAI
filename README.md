@@ -2,10 +2,10 @@
 
 ## Visualisation
 Number of cases per city:
-City | Total Cases 
------------- | ------------- 
-IQ | 3934
-SJ | 31993
+| City | Total Cases |
+| ---- | ----------- |
+| IQ | 3934 |
+| SJ | 31993 |
 
 Number of cases per year:
 ![Cases per year](images/cases_year.png) 
