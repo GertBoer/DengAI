@@ -2,10 +2,14 @@ import torch
 import torch.nn as nn
 import pandas as pd
 from torch.autograd import Variable
+from xgboost import XGBClassifier
 import numpy as np
 import matplotlib.pyplot as plt
+
 import csv
 import math
+import time
+import datetime
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
@@ -38,7 +42,7 @@ def preprocess(data, train):
 
 	data.drop(['city', 'weekofyear', 'week_start_date'], axis=1, inplace=True)
 
-	scaler = StandardScaler()
+	scaler = MinMaxScaler()
 
 	data[data.columns] = scaler.fit_transform(data)
 
@@ -63,21 +67,21 @@ V = preprocess(V, False)
 
 # 0 = linear regression
 # 1 = random forrest
+# 2 = XGBoost
 
-algorithm = 1
+algorithm = 2
 
 if algorithm == 0:
 	# Linear Regression
 	lr = LinearRegression()
 	lr.fit(X_train, Y_train)
 	Y_pred = lr.predict(X_test)
-	# print(mean_absolute_error(Y_test, Y_pred))
 
 	predictions = lr.predict(V)
 	predictions[predictions < 0] = 0
 
 elif algorithm == 1:
-	# Random forrest classifier
+	# Random forest classifier
 	rf = RandomForestRegressor(n_estimators = 300)
 
 	rf.fit(X_train, Y_train);
@@ -86,13 +90,21 @@ elif algorithm == 1:
 
 	predictions = rf.predict(V)
 
+elif algorithm == 2:
+	xb = XGBClassifier()
+	xb.fit(X_train, Y_train)
+	predictions = xb.predict(V)
 
 predictions = predictions.astype(int)
 print(predictions)
 
+
+ts = time.time()
+time = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+
 # Save predictions to file
-with open('predict', 'w') as csvfile2:
-    writer=csv.writer(csvfile2, delimiter=',')
+with open('predictions/predict_'+time, 'w+') as csvfile:
+    writer=csv.writer(csvfile, delimiter=',')
     writer.writerows(zip(predictions))
     print('klaar')
 
